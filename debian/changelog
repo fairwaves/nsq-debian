@@ -1,3 +1,9 @@
+nsq (0.3.8~fairwaves) trusty; urgency=low
+
+  * amd64 binaries taken from http://nsq.io, not going to bother with i386 until we really need it
+
+ -- Kirill Zakharenko <earwin@gmail.com>  Sun, 4 Dec 2016 01:09:00 +0300
+
 nsq (0.3.6~fairwaves) trusty; urgency=low
 
   * amd64 binaries taken from http://nsq.io, i386 built in vivid vm

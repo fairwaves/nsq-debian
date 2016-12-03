@@ -6,6 +6,6 @@ Build-Depends: debhelper (>= 9.0.0~), dh-exec
 Standards-Version: 3.9.5
 
 Package: nsq
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${misc:Depends}
 Description: NSQ: a realtime distributed messaging platform
