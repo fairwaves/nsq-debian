@@ -1,6 +1,5 @@
 #!/bin/bash
 
-HOST="127.0.0.1"
 TCP_PORT="4150"
 HTTP_PORT="4151"
 URL="http://$HOST:$HTTP_PORT"
@@ -41,7 +40,7 @@ command=$1
 shift
 case $command in
     stat )
-        watch -d -n1 curl -s "$URL/stats${1:+?topic=$1}${2:+&channel=$2}"
+        watch -d -n1 "curl -s \"$URL/stats${1:+?topic=$1}${2:+&channel=$2}\" | sed '/^Memory:$/,+10d'"
         ;;
     tail )
         nsq_tail -nsqd-tcp-address $HOST:$TCP_PORT -topic $1 ${2:+-n $2}
