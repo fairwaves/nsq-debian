@@ -1,3 +1,12 @@
+nsq (1.2.0~fw.1) bionic; urgency=low
+
+  * amd64 binaries taken from https://github.com/nsqio/nsq/releases/tag/v1.2.0
+  * added nsq script that simplifies local nsqd management
+  * added default nsqd config
+  * added systemd nsqd service
+
+ -- Kirill Zakharenko <earwin@gmail.com>  Fri, 1 May 2020 01:46:00 +0300
+
 nsq (0.3.8~fairwaves) trusty; urgency=low
 
   * amd64 binaries taken from http://nsq.io, not going to bother with i386 until we really need it
