@@ -1,2 +1,3 @@
 #!/usr/bin/dh-exec --with-scripts=subst-multiarch
 ${DEB_BUILD_ARCH}/* /usr/bin
+usr

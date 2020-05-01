@@ -1,0 +1,60 @@
+#!/bin/bash
+
+HOST="127.0.0.1"
+TCP_PORT="4150"
+HTTP_PORT="4151"
+URL="http://$HOST:$HTTP_PORT"
+
+function usage {
+    cat << EOF
+Usage:
+    nsq stat [<topic> [<channel>]]
+        watch nsqd stats (possibly filtered by topic/channel) updated each second
+        ctrl+C to exit
+
+    nsq tail <topic> [<limit>]
+        get a live stream for a given topic, at most <limit> messages if present
+        (utilizes ephemeral channel, so no cleanup is necessary)
+
+    nsq create <topic> [<channel>]
+        create a topic or channel
+        not terribly useful, as they are created on demand when pushing or pulling
+
+    nsq delete <topic> [<channel>]
+        drop a topic or channel, along with all the messages
+
+    nsq empty <topic> [<channel>]
+        drain a topic or a channel
+
+    nsq pause <topic> [<channel>]
+        pause messages going from topic to its channels, or from channel to its clients
+
+    nsq unpause <topic> [<channel>]
+        unpause previously paused topic or channel
+
+    nsq version
+        get nsqd version
+EOF
+}
+
+command=$1
+shift
+case $command in
+    stat )
+        watch -d -n1 curl -s "$URL/stats${1:+?topic=$1}${2:+&channel=$2}"
+        ;;
+    tail )
+        nsq_tail -nsqd-tcp-address $HOST:$TCP_PORT -topic $1 ${2:+-n $2}
+        ;;
+    create | delete | empty | pause | unpause )
+        if [[ -n $2 ]]; then target=channel; else target=topic; fi
+        curl -s -X POST "$URL/$target/$command?topic=${1:?Topic name is required.}${2:+&channel=$2}"
+        ;;
+    version )
+        curl -s "$URL/info" # Uuugly
+        echo
+        ;;
+    * )
+        usage
+        ;;
+esac
