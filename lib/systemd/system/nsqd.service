@@ -1,0 +1,13 @@
+[Unit]
+Description=Realtime distributed messaging (nsqd)
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/nsqd -config /etc/nsq/nsqd.conf
+Restart=always
+User=nsq
+Group=nsq
+StateDirectory=nsq
+
+[Install]
+WantedBy=multi-user.target

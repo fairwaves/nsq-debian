@@ -2,3 +2,4 @@
 ${DEB_BUILD_ARCH}/* /usr/bin
 etc
 usr
+lib
