@@ -1,5 +1,6 @@
 #!/bin/bash
 
+HOST="localhost"
 TCP_PORT="4150"
 HTTP_PORT="4151"
 URL="http://$HOST:$HTTP_PORT"
