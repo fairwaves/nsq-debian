@@ -8,7 +8,7 @@ URL="http://$HOST:$HTTP_PORT"
 function usage {
     cat << EOF
 Usage:
-    nsq stat [<topic> [<channel>]]
+    nsq stat [<topic> [<channel>]] (alias: stats, status)
         watch nsqd stats (possibly filtered by topic/channel) updated each second
         ctrl+C to exit
 
@@ -40,7 +40,7 @@ EOF
 command=$1
 shift
 case $command in
-    stat )
+    stat | stats | status )
         watch -d -n1 "curl -s \"$URL/stats${1:+?topic=$1}${2:+&channel=$2}\" | sed '/^Memory:$/,+10d'"
         ;;
     tail )
