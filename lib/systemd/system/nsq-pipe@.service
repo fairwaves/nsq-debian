@@ -1,0 +1,31 @@
+[Unit]
+Description=nsqd to nsqd pipe transport (%I)
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+EnvironmentFile=/etc/nsq/%i.pipe.conf
+ExecStart=/usr/bin/nsq_to_nsq \
+  --nsqd-tcp-address $SRC_ADDR \
+  --topic $SRC_TOPIC --channel $SRC_CHANNEL \
+  --destination-nsqd-tcp-address $DST_ADDR \
+  --destination-topic $DST_TOPIC \
+  --consumer-opt=snappy,true \
+  --consumer-opt=dial_timeout,10s \
+  --consumer-opt=read_timeout,1m \
+  --consumer-opt=write_timeout,1m \
+  --consumer-opt=heartbeat_interval,30s \
+  --producer-opt=snappy,true \
+  --producer-opt=dial_timeout,10s \
+  --producer-opt=read_timeout,1m \
+  --producer-opt=write_timeout,1m \
+  --producer-opt=heartbeat_interval,30s \
+  --max-in-flight=200 \
+  --status-every=1000
+Restart=always
+RestartSec=2
+User=nsq
+Group=nsq
+
+[Install]
+WantedBy=multi-user.target
